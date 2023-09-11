@@ -1,6 +1,6 @@
 # Sadeem
 
-Sadeem is a Distributed Key-Value Store implementation in golang.
+Sadeem (Arabic: السَدِيْم - Nebula) is a Distributed Key-Value Store implementation in golang.
 
 ## Contributing
 

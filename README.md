@@ -1,5 +1,7 @@
 # Sadeem
 
+[![Go](https://github.com/ssafty/sadeem/actions/workflows/go.yml/badge.svg)](https://github.com/ssafty/sadeem/actions/workflows/go.yml) [![Docker Image CI](https://github.com/ssafty/sadeem/actions/workflows/docker-image.yml/badge.svg)](https://github.com/ssafty/sadeem/actions/workflows/docker-image.yml)
+
 Sadeem (Arabic: السَدِيْم - Nebula) is a Distributed Key-Value Store implementation in golang.
 
 ## Contributing

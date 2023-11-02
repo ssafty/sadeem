@@ -1,0 +1,63 @@
+version: '3.8'
+services:
+  # service: prometheus 
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    volumes:
+      - "./monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml"
+      - "prometheus-storage:/prometheus"
+    networks:
+      - sadeem_network
+    ports:
+      # For grafana integration: use host.docker.internal:9090
+      - 9090:9090
+    restart: always
+
+  # service: alert-manager
+  alert-manager:
+    image: prom/alertmanager
+    container_name: alert_manager
+    volumes:
+      - "./monitoring/prometheus/alertmanager.yml:/alertmanager/alertmanager.yml"
+    networks:
+      - sadeem_network
+    ports:
+      - 9093:9093
+  
+  # service: node-exporter 
+  node-exporter:
+    image: prom/node-exporter
+    container_name: node_exporter
+    networks:
+      - sadeem_network
+    ports:
+      - 9100:9100
+    restart: unless-stopped
+    volumes:
+      - '/:/host:ro,rslave'
+    command:
+      - '--path.rootfs=/host'
+  
+  # service: Grafana
+  grafana:
+    image: grafana/grafana-enterprise # free-to-use compiled binary.
+    container_name: grafana
+    restart: unless-stopped
+    ports:
+      - '3000:3000'
+    volumes:
+      - grafana-storage:/var/lib/grafana
+      - ./monitoring/grafana/custom.ini:/etc/grafana/grafana.ini
+      - ./monitoring/grafana/dashboards:/var/lib/grafana/dashboards
+      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning
+    networks:
+      - sadeem_network
+
+networks:
+  sadeem_network:
+    driver: bridge
+
+volumes:
+  prometheus-storage: {}
+  grafana-storage: {}
